@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MyProgressBarView">
+        <attr name="preColor" format="color"/>
+        <attr name="preroundWidth" format="dimension"/>
+        <attr name="roundNowColor" format="color"/>
+        <attr name="roundNowWidth" format="dimension"/>
+        <attr name="progressMax" format="dimension"/>
+        <attr name="progress" format="dimension"/>
+        <attr name="jiantouColor" format="color"/>
+        <attr name="testStr" format="string" />
+        <attr name="textCol" format="color"/>
+
+    </declare-styleable>
+</resources>

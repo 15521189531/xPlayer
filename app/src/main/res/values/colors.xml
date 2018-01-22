@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="localTvColor">#bdccd1</color>
+    <color name="netTvColor">#788b91</color>
+
+    <color name="localTvColor1">#55bdccd1</color>
+    <color name="netTvColor1">#55788b91</color>
+
+    <color name="preColor">#979696</color>
+
+    <color name="roundNowColor">#0abf59</color>
+
+</resources>
