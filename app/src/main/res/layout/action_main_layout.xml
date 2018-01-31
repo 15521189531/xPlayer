@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true">
 
-            <com.example.zengcanwen.xplayer.View.MyVideoView
+            <com.example.zengcanwen.xplayer.main.customview.MyVideoView
                 android:id="@+id/video_view"
                 android:layout_width="267dp"
                 android:layout_height="200dp" />

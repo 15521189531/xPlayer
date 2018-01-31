@@ -8,11 +8,11 @@ import java.io.Serializable;
  * Created by zengcanwen on 2017/12/6.
  */
 
-public class NetVideosDataBean implements Serializable{
+public class NetVideosDataBean implements Serializable {
 
-    private String title ;
-    private String preview_url ;
-    private String video_url ;
+    private String title;
+    private String preview_url;
+    private String video_url;
 
     public String getTitle() {
         return title;

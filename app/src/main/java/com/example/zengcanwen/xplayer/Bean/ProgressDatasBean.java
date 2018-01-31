@@ -5,9 +5,9 @@ package com.example.zengcanwen.xplayer.Bean;
  */
 
 public class ProgressDatasBean {
-    private int progress ;
-    private int position ;
-    private long startPoints ;
+    private int progress;
+    private int position;
+    private long startPoints;
 
     public int getProgress() {
         return progress;

@@ -10,11 +10,11 @@ import java.nio.file.Path;
 
 public class LocalVideoFileBean {
 
-    private String mPath ;
-    private Bitmap mBitmap ;
-    private String mName   ;
-    private long mTime   ;
-    private long size       ;
+    private String mPath;
+    private Bitmap mBitmap;
+    private String mName;
+    private long mTime;
+    private long size;
 
     public LocalVideoFileBean() {
 

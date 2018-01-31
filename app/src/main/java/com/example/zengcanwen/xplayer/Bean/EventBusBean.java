@@ -5,33 +5,15 @@ package com.example.zengcanwen.xplayer.Bean;
  */
 
 public class EventBusBean {
-    private String path ;
-    private String name ;
-    private String tag ;
-    private int position ;
-    private boolean isFinish ;
+    private String path;
+    private String name;
+    private int tag;
 
-    public boolean getIsFinish() {
-        return isFinish;
-    }
-
-    public void setFinish(boolean finish) {
-        isFinish = finish;
-    }
-
-    public int getPosition() {
-        return position;
-    }
-
-    public void setPosition(int position) {
-        this.position = position;
-    }
-
-    public String getTag() {
+    public int getTag() {
         return tag;
     }
 
-    public void setTag(String tag) {
+    public void setTag(int tag) {
         this.tag = tag;
     }
 

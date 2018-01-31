@@ -5,25 +5,15 @@ package com.example.zengcanwen.xplayer.Bean;
  */
 
 public class VideoSaveBean {
-    private String path ;
-    private String seektime ;
-    private String alltime  ;
-    private String progressBar  ;
-    private String tag ;
-    private int postion  ;
-    private String name  ;
-    private boolean isDownFinish ;
+    public static final int LOCAL_TAG = 1;
+    public static final int ONLINE_TAG = 2;
+    private String path;
+    private String seektime;
+    private String alltime;
+    private int tag;
 
     public VideoSaveBean() {
 
-    }
-
-    public boolean getDownFinish() {
-        return isDownFinish;
-    }
-
-    public void setDownFinish(boolean downFinish) {
-        isDownFinish = downFinish;
     }
 
     public String getPath() {
@@ -50,35 +40,13 @@ public class VideoSaveBean {
         this.alltime = alltime;
     }
 
-    public String getProgressBar() {
-        return progressBar;
-    }
-
-    public void setProgressBar(String progressBar) {
-        this.progressBar = progressBar;
-    }
-
-    public String getTag() {
+    public int getTag() {
         return tag;
     }
 
-    public void setTag(String tag) {
+    public void setTag(int tag) {
         this.tag = tag;
     }
 
-    public int getPostion() {
-        return postion;
-    }
 
-    public void setPostion(int postion) {
-        this.postion = postion;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

@@ -1,4 +1,4 @@
-package com.example.zengcanwen.xplayer.View;
+package com.example.zengcanwen.xplayer.local.customview;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -7,14 +7,12 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Scroller;
 
-import com.example.zengcanwen.xplayer.Activity.MainActivity;
-
-import static com.example.zengcanwen.xplayer.View.MyListView.WIDTH;
+import static com.example.zengcanwen.xplayer.local.customview.MyListView.WIDTH;
 
 /**
+ * 实现侧滑菜单ListView的子Item
  * Created by zengcanwen on 2017/11/28.
  */
 
@@ -22,7 +20,6 @@ public class MyItemListView extends LinearLayout {
 
     private ViewGroup contentVg ;
     private ViewGroup numeVg ;
-    private MyListView myListView ;
 
     private float numeScale = 0.5f ;         //菜单与内容的比例
 
@@ -30,11 +27,6 @@ public class MyItemListView extends LinearLayout {
 
     private  ViewGroup.LayoutParams contentParams ;   //内容控件的LayoutParams
     private ViewGroup.LayoutParams numeParams ;        //菜单控件的LayoutParams
-    private boolean isOpenNume = false              ;  //判断菜单是否打开
-
-    public boolean getIsOpenNume(){
-        return isOpenNume ;
-    }
 
     public MyItemListView(Context context ) {
         this(context , null);
@@ -56,8 +48,7 @@ public class MyItemListView extends LinearLayout {
     }
 
     //向MyItemListView填充控件,并设置初始宽高
-    public void setView(MyListView myListView, ViewGroup contentVg , ViewGroup numeVg){
-        this.myListView = myListView ;
+    public void setView( ViewGroup contentVg , ViewGroup numeVg){
         this.contentVg = contentVg ;
         this.numeVg = numeVg ;
         if(contentParams == null){
@@ -106,20 +97,12 @@ public class MyItemListView extends LinearLayout {
 
         //右滑时，当控件滑动距离大于菜单控件的3/1时，收缩
         if (dx > 0) {
-            if (scroller.getFinalX() < numeVg.getWidth() * 3 / 2) {
-                return false;
-            } else {
-                return true;
-            }
+            return (scroller.getFinalX() < numeVg.getWidth() * 3 / 2) ? false : true ;
         }
 
         //左滑时，当控价滑动距离大于菜单控价的3/1时，展开
         else{
-            if (scroller.getFinalX() > numeVg.getWidth() / 3) {
-                return true;
-            } else {
-                return false;
-            }
+            return  (scroller.getFinalX() > numeVg.getWidth() / 3)? true : false ;
         }
     }
 
@@ -140,7 +123,6 @@ public class MyItemListView extends LinearLayout {
         }else {                  //判断左滑
 
             //处理边界，如果左滑过程中，scroller.getFinalX() < 菜单宽度，说明没有出界
-            Log.i("aaaaa" , "菜单宽度---------->" + numeVg.getWidth()) ;
             if(scroller.getFinalX() < numeVg.getWidth()){
                 //更加细微的边界处理
                 int min = Math.min(dx, numeVg.getWidth()-scroller.getFinalX());
@@ -150,8 +132,6 @@ public class MyItemListView extends LinearLayout {
                 scroller.setFinalX(numeVg.getWidth());
             }
         }
-
-        Log.i("aaaaa"  , "scroll.getFinalX()--------->" + scroller.getFinalX()) ;
     }
 
 

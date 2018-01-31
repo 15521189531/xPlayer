@@ -1,4 +1,4 @@
-package com.example.zengcanwen.xplayer.local.main;
+package com.example.zengcanwen.xplayer.local.fragment;
 
 import android.app.Fragment;
 import android.content.res.Configuration;
@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.zengcanwen.xplayer.Adapter.MyListViewAdapter;
+import com.example.zengcanwen.xplayer.local.adapter.MyListViewAdapter;
 import com.example.zengcanwen.xplayer.Bean.LocalVideoFileBean;
 import com.example.zengcanwen.xplayer.R;
 import com.example.zengcanwen.xplayer.Util.LoadingUtil;
@@ -21,6 +21,7 @@ import com.example.zengcanwen.xplayer.local.view.LocalView;
 import java.util.ArrayList;
 
 /**
+ * 本地视频播放列表Fragment
  * Created by zengcanwen on 2018/1/25.
  */
 
@@ -105,5 +106,5 @@ public class LocalFragment extends Fragment implements LocalView, LocalListener,
         super.onConfigurationChanged(newConfig);
         mLocalPresenter.configurationChanged();
     }
-    
+
 }

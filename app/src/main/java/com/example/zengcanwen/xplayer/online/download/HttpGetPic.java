@@ -1,16 +1,7 @@
-package com.example.zengcanwen.xplayer.Util;
-
-import android.os.Environment;
-import android.util.Log;
+package com.example.zengcanwen.xplayer.online.download;
 
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.RandomAccessFile;
-import java.nio.MappedByteBuffer;
-import java.nio.channels.FileChannel;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -20,30 +11,28 @@ import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 /**
+ * OkHttp实现图片下载类
  * Created by zengcanwen on 2017/12/6.
  */
 
-public class HttpUtil {
+public class HttpGetPic {
     //使用单例
-    private static HttpUtil httpUtil;
+    private static HttpGetPic httpUtil;
 
     private OkHttpClient okHttpClient;
 
-    private  Call call ;
-
-    private HttpUtil() {
+    private HttpGetPic() {
         okHttpClient = new OkHttpClient();
     }
 
     //双重锁
-    public static HttpUtil getInstance() {
+    public static HttpGetPic getInstance() {
         if (httpUtil == null) {
-            synchronized (HttpUtil.class) {
+            synchronized (HttpGetPic.class) {
                 if (httpUtil == null) {
-                    httpUtil = new HttpUtil();
+                    httpUtil = new HttpGetPic();
                 }
             }
         }
@@ -53,6 +42,7 @@ public class HttpUtil {
     //相应回调
     public interface OkhttpResponse {
         void onError(Call call, IOException e);
+
         void onResponse(Call call, Response response);
     }
 

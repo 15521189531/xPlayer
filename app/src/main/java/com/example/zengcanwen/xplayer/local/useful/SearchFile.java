@@ -1,4 +1,4 @@
-package com.example.zengcanwen.xplayer.local.other;
+package com.example.zengcanwen.xplayer.local.useful;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -7,6 +7,7 @@ import android.media.ThumbnailUtils;
 import android.provider.MediaStore;
 import android.util.Log;
 
+import com.example.zengcanwen.xplayer.Application.MyApplication;
 import com.example.zengcanwen.xplayer.Bean.LocalVideoFileBean;
 import com.example.zengcanwen.xplayer.Util.DipandPxUtli;
 
@@ -16,26 +17,30 @@ import java.util.ArrayList;
 
 import static android.provider.MediaStore.Images.Thumbnails.MICRO_KIND;
 
-public class FileUtil {
+/**
+ * 本地列表Fragment中搜索文件类
+ * Created by zengcanwen on 2018/1/25.
+ */
+
+public class SearchFile {
 
     private Context context ;
 
-    public static String FILEPATHBASE ;
+    public static String FILEPATHBASE = MyApplication.getContext().getFilesDir() + "/" + "myXplayer" + "/" ;
 
-    public FileUtil(Context context ){
+    public SearchFile(Context context ){
         this.context = context  ;
-        FILEPATHBASE = context.getFilesDir() + "/" + "myXplayer" + "/" ;
     }
 
 
-    //扫描本地视频，VideoView只支持。3gp , MP4 , avi 这三种格式
+    //VideoView只支持3gp , MP4 , avi 这三种格式
     //缺点：通过扫描SDcard的全部文件和文件夹得到视频文件，
-    // 扫描的时间长达30s,看起来好像是连缓存下来的文件也找了一遍，这种方法可能比较实用与GoSpeed中的文件扫描
-    public void getVideoFormLocal(final ArrayList<LocalVideoFileBean> arrayList , File file){
+    // 扫描的时间长达30s,深度查找文件夹
+    public void getVideoFormLocal(final ArrayList<LocalVideoFileBean> arrayList , java.io.File file){
         try {
            file.listFiles(new FileFilter() {
                 @Override
-                public boolean accept(File file) {
+                public boolean accept(java.io.File file) {
                     String nameStr = file.getName();
                     int i = nameStr.indexOf(".");
                     if (i != -1) {

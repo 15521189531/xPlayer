@@ -5,10 +5,14 @@ package com.example.zengcanwen.xplayer.Bean;
  */
 
 public class EventBusServiceBean {
-    private int tag  ;
-    private int progress ;
-    private String url ;
-    private int position ;
+    public static final int DOWNING = 1;
+    public static final int PAUSE = 2;
+    public static final int FINISH = 3;
+    public static final int SENDMESSAGE = 4;
+    private int tag;
+    private int progress;
+    private String url;
+    private int position;
 
     public int getPosition() {
         return position;
@@ -41,7 +45,6 @@ public class EventBusServiceBean {
     public void setTag(int tag) {
         this.tag = tag;
     }
-
 
     public EventBusServiceBean() {
 

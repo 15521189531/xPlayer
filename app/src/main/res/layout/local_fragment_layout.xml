@@ -3,10 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.example.zengcanwen.xplayer.View.MyListView
+    <com.example.zengcanwen.xplayer.local.customview.MyListView
         android:id="@+id/local_fragment_mlv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    </com.example.zengcanwen.xplayer.View.MyListView>
+    </com.example.zengcanwen.xplayer.local.customview.MyListView>
 
 </LinearLayout>
