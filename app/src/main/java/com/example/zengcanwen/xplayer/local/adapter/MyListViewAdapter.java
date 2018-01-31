@@ -7,14 +7,13 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.zengcanwen.xplayer.Bean.LocalVideoFileBean;
 import com.example.zengcanwen.xplayer.R;
 import com.example.zengcanwen.xplayer.Util.TimeUtil;
-import com.example.zengcanwen.xplayer.View.MyItemListView;
-import com.example.zengcanwen.xplayer.View.MyListView;
+import com.example.zengcanwen.xplayer.local.customview.MyItemListView;
+import com.example.zengcanwen.xplayer.local.customview.MyListView;
 
 import java.util.ArrayList;
 
@@ -30,9 +29,9 @@ public class MyListViewAdapter extends BaseAdapter {
     private MyItemListView myItemListView ;
 
     public interface MyClickListener{
-        void contentClickListener(int position , String filePath) ;
-        void cancelClickListener(int position , String filePath) ;
-        void deleteClickListener(int position , String filePath) ;
+        void contentClickListener(int position ) ;
+        void cancelClickListener(int position ) ;
+        void deleteClickListener(int position ) ;
     }
 
     private MyClickListener myClickListener ;
@@ -80,17 +79,17 @@ public class MyListViewAdapter extends BaseAdapter {
             myListView.setMyClickListener(new MyListView.MyClickListener() {
                 @Override
                 public void contentClickListener(int position) {
-                    myClickListener.contentClickListener(position , arrayList.get(position).getmPath());
+                    myClickListener.contentClickListener(position);
                 }
 
                 @Override
                 public void deleteClickListener(int position) {
-                    myClickListener.deleteClickListener(position , arrayList.get(position).getmPath());
+                    myClickListener.deleteClickListener(position);
                 }
 
                 @Override
                 public void cancleClickListener(int position) {
-                    myClickListener.cancelClickListener(position , arrayList.get(position).getmPath());
+                    myClickListener.cancelClickListener(position);
                 }
             });
             myItemListView.setTag(viewHolder);

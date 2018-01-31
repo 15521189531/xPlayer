@@ -1,9 +1,6 @@
-package com.example.zengcanwen.xplayer.Adapter;
+package com.example.zengcanwen.xplayer.online.adapter;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,21 +9,13 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.zengcanwen.xplayer.Bean.NetVideosDataBean;
 import com.example.zengcanwen.xplayer.R;
-import com.example.zengcanwen.xplayer.Util.HttpUtil;
-import com.example.zengcanwen.xplayer.Util.SPUtil;
-import com.example.zengcanwen.xplayer.View.MyProgressBarView;
+import com.example.zengcanwen.xplayer.online.customView.MyProgressBarView;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import okhttp3.Call;
-import okhttp3.Response;
 
 /**
  * Created by zengcanwen on 2017/12/5.

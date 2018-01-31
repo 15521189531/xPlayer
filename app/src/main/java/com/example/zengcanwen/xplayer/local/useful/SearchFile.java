@@ -1,31 +1,24 @@
-package com.example.zengcanwen.xplayer.Util;
+package com.example.zengcanwen.xplayer.local.other;
 
-import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.media.ThumbnailUtils;
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 
 import com.example.zengcanwen.xplayer.Bean.LocalVideoFileBean;
+import com.example.zengcanwen.xplayer.Util.DipandPxUtli;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import static android.provider.MediaStore.Images.Thumbnails.MICRO_KIND;
-import static android.provider.MediaStore.Images.Thumbnails.getContentUri;
-
-/**
- * Created by zengcanwen on 2017/11/30.
- */
 
 public class FileUtil {
 
-    private  Context context ;
+    private Context context ;
 
     public static String FILEPATHBASE ;
 
@@ -38,7 +31,7 @@ public class FileUtil {
     //扫描本地视频，VideoView只支持。3gp , MP4 , avi 这三种格式
     //缺点：通过扫描SDcard的全部文件和文件夹得到视频文件，
     // 扫描的时间长达30s,看起来好像是连缓存下来的文件也找了一遍，这种方法可能比较实用与GoSpeed中的文件扫描
-    public void getVideoFormLocal( final  ArrayList<LocalVideoFileBean> arrayList , File file){
+    public void getVideoFormLocal(final ArrayList<LocalVideoFileBean> arrayList , File file){
         try {
            file.listFiles(new FileFilter() {
                 @Override
