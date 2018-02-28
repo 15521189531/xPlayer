@@ -1,42 +1,47 @@
 package com.example.zengcanwen.xplayer.online.model;
 
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.os.Handler;
-import android.os.Message;
-import android.util.LruCache;
-import android.widget.Toast;
+        import android.content.Context;
+        import android.content.Intent;
+        import android.graphics.Bitmap;
+        import android.graphics.BitmapFactory;
+        import android.graphics.drawable.BitmapDrawable;
+        import android.graphics.drawable.Drawable;
+        import android.os.Handler;
+        import android.os.Message;
+        import android.util.LruCache;
+        import android.widget.Toast;
 
-import com.example.zengcanwen.xplayer.Bean.EventBusBean;
-import com.example.zengcanwen.xplayer.Bean.EventBusServiceBean;
-import com.example.zengcanwen.xplayer.Bean.NetVideosDataBean;
-import com.example.zengcanwen.xplayer.Util.SPUtil;
-import com.example.zengcanwen.xplayer.online.download.HttpGetPic;
-import com.example.zengcanwen.xplayer.online.download.MyDownService;
+        import com.avos.avoscloud.AVException;
+        import com.avos.avoscloud.AVObject;
+        import com.avos.avoscloud.AVQuery;
+        import com.avos.avoscloud.FindCallback;
+        import com.example.zengcanwen.xplayer.Bean.EventBusBean;
+        import com.example.zengcanwen.xplayer.Bean.EventBusServiceBean;
+        import com.example.zengcanwen.xplayer.Bean.NetVideosDataBean;
+        import com.example.zengcanwen.xplayer.Util.SPUtil;
+        import com.example.zengcanwen.xplayer.online.download.HttpGetPic;
+        import com.example.zengcanwen.xplayer.online.download.MyDownService;
 
-import org.greenrobot.eventbus.EventBus;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+        import org.greenrobot.eventbus.EventBus;
+        import org.json.JSONArray;
+        import org.json.JSONException;
+        import org.json.JSONObject;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+        import java.io.File;
+        import java.io.IOException;
+        import java.io.InputStream;
+        import java.lang.ref.WeakReference;
+        import java.util.ArrayList;
+        import java.util.HashMap;
+        import java.util.Iterator;
+        import java.util.List;
+        import java.util.Map;
 
-import okhttp3.Call;
-import okhttp3.Response;
+        import okhttp3.Call;
+        import okhttp3.Response;
 
-import static com.example.zengcanwen.xplayer.Bean.EventBusServiceBean.SENDMESSAGE;
-import static com.example.zengcanwen.xplayer.Bean.VideoSaveBean.ONLINE_TAG;
+        import static com.example.zengcanwen.xplayer.Bean.EventBusServiceBean.SENDMESSAGE;
+        import static com.example.zengcanwen.xplayer.Bean.VideoSaveBean.ONLINE_TAG;
 
 
 /**
@@ -314,36 +319,28 @@ public class OnlineModelImpl implements OnlineModel {
 
         @Override
         public void run() {
-            OnlineModelImpl onlineModelImpl = weakReference.get();
-            int resquestTime = 0;
-            while (resquestTime < 5) {
-                String videoDatasJson = edu.xplayerapi.HttpApi.getVideos(onlineModelImpl.mContext);
-                try {
-                    JSONObject jsonObject = new JSONObject(videoDatasJson);
-                    JSONArray jsonArray = jsonObject.getJSONArray("video_list");
-                    if (jsonArray == null || jsonArray.length() == 0) {
-                        //请求失败
-                        resquestTime++;    //如果失败，重复请求5次
-                    } else {
-                        //请求成功
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            NetVideosDataBean netVideosDataBean = new NetVideosDataBean();
-                            jsonObject = jsonArray.getJSONObject(i);
-                            netVideosDataBean.setTitle(jsonObject.getString("title"));
-                            netVideosDataBean.setPreview_url(jsonObject.getString("preview_url"));
-                            netVideosDataBean.setVideo_url(jsonObject.getString("video_url"));
-                            onlineModelImpl.mNetFileList.add(netVideosDataBean);
-                        }
-                        onlineModelImpl.mHandler.sendMessage(onlineModelImpl.mHandler.obtainMessage(SEARCHFILEONLINESUCCESS));    //请求成功
-                        return;
+            final OnlineModelImpl onlineModelImpl = weakReference.get();
+            //获取LeanCloud中的数据
+            try {
+                AVQuery<AVObject> avObjectAVQuery = new AVQuery<>("xPlayerData");
+                List<AVObject> list = avObjectAVQuery.find() ;
+                if(avObjectAVQuery != null && list != null) {
+                    for (AVObject avObject : list) {
+                        NetVideosDataBean netVideosDataBean = new NetVideosDataBean();
+                        netVideosDataBean.setTitle(avObject.getString("title"));
+                        netVideosDataBean.setPreview_url(avObject.getString("preview_url"));
+                        netVideosDataBean.setVideo_url(avObject.getString("video_url"));
+                        onlineModelImpl.mNetFileList.add(netVideosDataBean);
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    //请求成功
+                    onlineModelImpl.mHandler.sendMessage(onlineModelImpl.mHandler.obtainMessage(SEARCHFILEONLINESUCCESS));
+                }else {
+                    //最终请求失败
+                    onlineModelImpl.mHandler.sendMessage(onlineModelImpl.mHandler.obtainMessage(SEARCHFILEONLINEFAIL));
                 }
+            }catch (Exception e) {
+                e.printStackTrace();
             }
-
-            //最终请求失败
-            onlineModelImpl.mHandler.sendMessage(onlineModelImpl.mHandler.obtainMessage(SEARCHFILEONLINEFAIL));
         }
     }
 

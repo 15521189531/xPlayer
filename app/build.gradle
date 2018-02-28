@@ -16,12 +16,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
-    repositories {
-        flatDir {
-            dirs 'libs'   // aar目录
-        }
-    }
 }
 
 dependencies {
@@ -35,7 +29,7 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
     //Okhttp
     compile 'com.squareup.okhttp3:okhttp:3.6.0'
-    //引用xPlayerApi.aar
-    compile(name:'xPlayerApi', ext:'aar')
+    // LeanCloud 基础包
+    compile ('cn.leancloud.android:avoscloud-sdk:v4.6.4')
 
 }
