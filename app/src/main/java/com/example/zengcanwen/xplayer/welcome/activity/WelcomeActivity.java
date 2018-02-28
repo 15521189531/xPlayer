@@ -1,5 +1,7 @@
 package com.example.zengcanwen.xplayer.welcome.activity;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -8,9 +10,13 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import com.example.zengcanwen.xplayer.R;
 import com.example.zengcanwen.xplayer.main.activity.MainActivity;
+import com.example.zengcanwen.xplayer.welcome.customtrailview.BezierTrailAnimationView;
 import com.example.zengcanwen.xplayer.welcome.permission.PermissionBase;
 
 import java.lang.ref.WeakReference;
@@ -24,13 +30,16 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private PermissionBase mPermissionBase; //权限
     private Handler myHandler;
+    private FrameLayout mainFl;
+    private LinearLayout mainLl;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.welcome_layout);
+        mainFl = findViewById(R.id.main_fl);
+        mainLl = findViewById(R.id.main_ll);
 
-        //使用handler延时实现淡入淡出效果
         myHandler = new MyHandler(this);
 
         //动态获取权限
@@ -49,10 +58,48 @@ public class WelcomeActivity extends AppCompatActivity {
 
         @Override
         public void handleMessage(Message msg) {
-            WelcomeActivity welcomeActivity = mWeakReference.get();
+            final WelcomeActivity welcomeActivity = mWeakReference.get();
+            if (welcomeActivity == null) return;
             switch (msg.what) {
                 case 101:
-                    //实现跳转并实现动画
+                    //开启轨迹动画，在动画结束时展示欢迎图标
+                    BezierTrailAnimationView bezierTrailAnimationView = new BezierTrailAnimationView(welcomeActivity.mainFl, welcomeActivity);
+                    bezierTrailAnimationView.start();
+                    bezierTrailAnimationView.setOnEndAnimation(new BezierTrailAnimationView.OnEndAnimation() {
+                        @Override
+                        public void endAnimation() {
+                            welcomeActivity.mainLl.setVisibility(View.VISIBLE);
+                            ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(welcomeActivity.mainLl, "alpha", 0.0f, 1.0f);
+                            objectAnimator.setDuration(1000);
+                            objectAnimator.start();
+                            objectAnimator.addListener(new Animator.AnimatorListener() {
+                                @Override
+                                public void onAnimationStart(Animator animation) {
+
+                                }
+
+                                @Override
+                                public void onAnimationEnd(Animator animation) {
+                                    sendEmptyMessageDelayed(102, 1000);
+                                }
+
+                                @Override
+                                public void onAnimationCancel(Animator animation) {
+
+                                }
+
+                                @Override
+                                public void onAnimationRepeat(Animator animation) {
+
+                                }
+                            });
+                        }
+                    });
+                    break;
+
+                case 102:
+
+                    //实现淡入淡出跳转
                     Intent intent = new Intent(welcomeActivity, MainActivity.class);
                     welcomeActivity.startActivity(intent);
                     welcomeActivity.finish();
@@ -60,7 +107,7 @@ public class WelcomeActivity extends AppCompatActivity {
                     if (VERSION >= 5) {
                         welcomeActivity.overridePendingTransition(R.anim.entry_anim, R.anim.quit_anim);
                     }
-
+                    break;
             }
         }
     }
